@@ -81,6 +81,9 @@
 					}
 				);
 			});
+			$("#eamil").click(function(){
+				window.location.href="${path}/getEmailPage.html";
+			});
 		});
 	</script>
   </head>
@@ -107,5 +110,6 @@
     		<span><font>没有数据</font></span>
     	</div>
     </c:if>
+    <button id="eamil">发送邮件</button>
   </body>
 </html>
