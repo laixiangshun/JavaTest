@@ -2,8 +2,13 @@ package com.foxera.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 
@@ -18,19 +23,31 @@ import org.icepdf.core.util.GraphicsRenderingHints;
  */
 public class pdfToImage {
 
-	public static void pdfToImg(String pdfpath,String path,String type){
+	public static void pdfToImg(String pdfpath,final String path,String type){
 		Document document=new Document();
 		document.setFile(pdfpath);
 		float scale=2.5f;//缩放比例
 		float rotation =0f;//选择角度
 		int pages=document.getNumberOfPages();//pdf实际页数
-		List<BufferedImage> piclist=new ArrayList<>();
+		final List<BufferedImage> piclist=new ArrayList<>();
 		for(int i=0;i<pages;i++){
 			BufferedImage image=(BufferedImage)document.getPageImage(i, GraphicsRenderingHints.SCREEN, Page.BOUNDARY_CROPBOX, rotation, scale);
 			piclist.add(image);
 		}
+		/*ExecutorService fixedThreadpool=Executors.newFixedThreadPool(3);
+		try {
+			fixedThreadpool.execute(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					yPic(piclist, path,type);
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 		yPic(piclist, path,type);
-		
 	}
 	/**
 	 * 将宽度相同的图片竖向加在一起：宽度必须相同
@@ -77,9 +94,33 @@ public class pdfToImage {
 			}
 			File outFile=new File(outpath);
 			ImageIO.write(imageResult, type, outFile);//写入流中
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	
+	public static <T> void unmap(final Object buffer){
+		AccessController.doPrivileged(new PrivilegedAction<T>() {
+
+			@Override
+			public T run() {
+				// TODO Auto-generated method stub
+				try {
+					Method getCleanerMethod=buffer.getClass().getMethod("cleaner",new Class[0]);
+					getCleanerMethod.setAccessible(true);//内存中的可见性，不是字节码的
+					//Cleaner cleaner=(Cleaner)getCleanerMethod.invoke(buffer, new Object[0]);
+					// cleaner.clean();  //Cleaner找不到这个类？
+				} catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+		});
 	}
 }

@@ -1,6 +1,7 @@
 package com.foxera.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,7 +27,7 @@ public class pdfToImageController {
 		return "pdfToImage";
 	}
 	@RequestMapping(value="/pdfToImageSave.action",method=RequestMethod.POST)
-	public void pdfToImageSave(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public void pdfToImageSave(HttpServletRequest request,final HttpServletResponse response) throws Exception{
 		String path=HttpUtil.getString("files").replace("/", File.separator);
 		String absoluteDirectory=request.getSession().getServletContext().getRealPath(path);
 		final String absolutePath=(absoluteDirectory+"/").replace("/", File.separator)+"111.pdf";
@@ -40,8 +41,9 @@ public class pdfToImageController {
 		if(file.exists()){
 			file.delete();
 		}
-		//创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程
-		ExecutorService cachedthreadpool=Executors.newCachedThreadPool();
+		com.foxera.util.pdfToImage.pdfToImg(absolutePath, absolutePath2,"jpg");
+		/*//创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程
+	    ExecutorService cachedthreadpool=Executors.newCachedThreadPool();
 		cachedthreadpool.execute(new Runnable() {
 			
 			@Override
@@ -52,6 +54,7 @@ public class pdfToImageController {
 		});
 		
 		if(!file.exists()){
+			//cachedthreadpool=Executors.newCachedThreadPool();
 			cachedthreadpool.execute(new Runnable() {
 				
 				@Override
@@ -60,7 +63,7 @@ public class pdfToImageController {
 					com.foxera.util.pdfToImage.pdfToImg(absolutePath, absolutePath2,"jpg");
 				}
 			});
-		}
+		}*/
 		response.setContentType("text/html;charset=utf-8");
 		String abpath=request.getContextPath()+"/images/"+name+".jpg";
 		response.getWriter().write(abpath);

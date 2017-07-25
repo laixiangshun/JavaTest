@@ -31,7 +31,7 @@
     			type: "post",
     			cache: false,
     			success: function(data){
-    				alert(data);
+    				//alert(data);
     				if(data!=null && data!=""){
     					$("#pdftoimg").attr("src",data);
     				}
