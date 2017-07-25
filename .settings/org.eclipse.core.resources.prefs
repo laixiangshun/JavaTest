@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/pages/pdfToImage.jsp=UTF-8
 encoding//src/com/foxera/interceptor/ValidateInterceptor.java=UTF-8
 encoding//src/com/foxera/models/MailModel.java=UTF-8
 encoding//src/com/foxera/util/MyAuthenticator.java=UTF-8

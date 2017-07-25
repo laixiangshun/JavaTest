@@ -81,5 +81,10 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-websocket-4.3.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xstream-1.3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/icepdf-core.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/icepdf-extra.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/icepdf-pro-intl.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/icepdf-pro.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/icepdf-viewer.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

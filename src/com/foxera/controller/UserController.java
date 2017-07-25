@@ -201,9 +201,10 @@ public class UserController {
 			builder.append("看看下面的图片，你会更美好：<br/>");
 			//builder.append("<img src=\"cid:p1\"/><br/>");
 			builder.append("</body></html>");
+			
 			MailModel email=new MailModel();
 			email.setEmailFrom(eamilFrom);
-			email.setEmailHost(smtpHostName);
+			//email.setEmailHost(smtpHostName);
 			email.setContent(builder.toString());
 			//email.setEmailPassword("dsijgtjemyxhbcgg");
 			email.setEmailPassword("ftpryluwfwaebfac");

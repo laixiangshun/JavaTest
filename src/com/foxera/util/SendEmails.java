@@ -30,6 +30,15 @@ public class SendEmails {
 	public static ResultModel sendEmail(MailModel email)
 	{
 		ResultModel result=new ResultModel();
+		String eamilFrom=null;
+		if(email.getEmailFrom()!=null)
+		{
+			eamilFrom=email.getEmailFrom();
+		}
+		//通过邮箱地址解析出smtp服务器，对大多数邮箱都管用
+		final String smtpHostName="smtp."+eamilFrom.split("@")[1];
+		email.setEmailHost(smtpHostName);
+		
 		try {
 			if(email.getEmailHost().equals("") || email.getEmailFrom().equals("") || email.getEmailUserName().equals("")
 					|| email.getEmailPassword().equals("") || email.getToEmails().equals(""))
@@ -38,6 +47,7 @@ public class SendEmails {
 				result.setMessage("邮件信息不完整，不能发送");
 				return result;
 			}
+			
 			JavaMailSenderImpl  senderImpl=new JavaMailSenderImpl();
 			//设定邮件服务
 			senderImpl.setHost(email.getEmailHost());
